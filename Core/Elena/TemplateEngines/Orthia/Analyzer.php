@@ -55,33 +55,63 @@ class Analyzer
                 preg_match($pattern, $line,$match);
                 $method = substr($line, 0, strcspn($line,'('));
                 if(method_exists($Build_In_Function, $method)){
-                    $result = call_user_func_array(array($Build_In_Function, $method), trim(explode(",", $match[1])));
-                    if(is_bool($result) and $result and $ifend || is_bool($result) and !$result){
+                    $result = call_user_func_array(array($Build_In_Function, $method), explode(",", trim($match[1])));
+                    if(is_bool($result) && $result && $ifend && $loop_from_next_block && !$eachloop_from_next_block || is_bool($result) and !$result && $loop_from_next_block && !$eachloop_from_next_block){
                         $delete_from_next_block = True;
-                    }else if(is_bool($result) and $result){
+                        unset($template[$key]);
+                    }else if(is_bool($result) && $result && $loop_from_next_block && !$eachloop_from_next_block){
                         $delete_from_next_block = False;
-                    }else if(is_int($result)){
+                        unset($template[$key]);
+                    }else if(is_int($result) && $loop_from_next_block && !$eachloop_from_next_block){
                         $loop_from_next_block = True;
                         $loop = $result;
-                    }else if(is_array($result)){
+                        unset($template[$key]);
+                    }else if(is_array($result) && $loop_from_next_block && !$eachloop_from_next_block){ 
                         $eachloop_from_next_block = True;
                         $each_array = $result;
+                        unset($template[$key]);
                     }else{
                         if(isset($$result)){
-
                             $$result = False;
+                            $prepared = "";
+                            $block_template;
+                            if($result == "loop_from_next_block"){
+                                for($i = 0; $i <= $loop; $i++){
+                                    $analyzer_instance = new Analyzer();
+                                    $prepared .= $analyzer_instance->Main($block_template, $this->param) . "\n";
+                                }
+                            }else if($result == "eachloop_from_next_block"){
+                                $key_name = $Build_In_Function->$key_name;
+                                $value_name = $Build_In_Function->$value_name;
+                                foreach($each_array as $$key_name => $$value_name){
+                                    $params = [
+                                        $key_name => $$key_name,
+                                        $value_name => $$value_name
+                                    ];
+                                    $params = array_merge($params, $this->param);
+                                    $analyzer_instance = new Analyzer();
+                                    $prepared .= $analyzer_instance->Main($block_template, $params) . "\n";
+                                }
+                            }else if($result == "delete_from_next_block"){
+                                //TODO
+                            }
+                            $this->prepared .= $prepared . "\n";
+                            unset($template[$key]);
                         }else {
                             $this->prepared .= $result . "\n";
                             unset($template[$key]);
                         }
                     }
                 }else if(method_exists($UsersFunction, $method)){
-                    call_user_func_array(array($UsersFunction, $method), trim(explode(",", $match[1])));
+                    call_user_func_array(array($UsersFunction, $method), explode(",", trim($match[1])));
                 }else{
                     throw new ClearSkyOrthiaException("Orthia Template Function '".trim($method)."' is not defined.");
                     exit(1);
                 }
             }else{
+                if($loop_from_next_block || $eachloop_from_next_block){
+                    $block_template .$line . "\n";
+                }
                 if(!$delete_from_next_block) {
                     $this->prepared .= $line . "\n";
                 }

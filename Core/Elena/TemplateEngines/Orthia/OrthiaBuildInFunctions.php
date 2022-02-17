@@ -8,7 +8,9 @@ use Clsk\Elena\Tools\FileReader;
 
 class OrthiaBuildInFunctions
 {
-    private $params;
+    public $params;
+    public $key_name;
+    public $value_name;
 
     public function __construct(String $param)
     {
@@ -43,6 +45,18 @@ class OrthiaBuildInFunctions
     public function for()
     {
         //TODO
+    }
+
+    public function foreach($array, $get)
+    {
+        if(strpos($get,'=>') !== false){
+            $key_and_value = explode("=>", $get);
+            $this->key_name = trim($key_and_value[0]);
+            $this->value_name = trim($key_and_value[1]);
+          }else{
+              $this->key_name = "key";
+              $this->value_name = "value";
+          }
     }
 
     public function csrf_token()
