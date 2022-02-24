@@ -12,7 +12,8 @@ use Clsk\Elena\Request\RequestReceptor;
 use Clsk\Elena\Executer\ProvideAbility;
 
 class {{CONTROLLER_NAME}}{
-    public function index(){
+    public function Index()
+    {
         //TODO
     }
 }

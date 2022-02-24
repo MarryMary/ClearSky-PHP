@@ -8,7 +8,12 @@ class RequestReceptor
     private $urlparams = array();
 
     public function __construct(){
-        $this->urlparams = Session::SessionReader("URLParams");
+        if(Session::IsIn("URLParams") && is_array(Session::SessionReader("URLParams")))
+        {
+            $this->urlparams = Session::SessionReader("URLParams");
+        }else{
+            $this->urlparams = array();
+        }
         foreach($_POST as $post => $val){
             $this->$post = $val;
         }

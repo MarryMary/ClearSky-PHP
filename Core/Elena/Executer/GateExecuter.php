@@ -1,24 +1,24 @@
 <?php
 require dirname(__FILE__)."/../../../vendor/autoload.php";
 
-use Clsk\Elena\Executer\ProvideAbility;
+use Clsk\Elena\Executer\Provide;
 
 function Viewer(String $filename){
-    return ProvideAbility::Viewer($filename);
+    return Provide::Viewer($filename);
 }
 
 function Reader(String $filename, Array $params){
-    return ProvideAbility::Reader($filename, $params);
+    return Provide::Reader($filename, $params);
 }
 
-function Controller(String $controller_name, String $function_name, Array $params = array()){
-    return ProvideAbility::Controller($controller_name, $function_name, $params);
+function Controller(String $controller_name, String $function_name){
+    return Provide::Controller($controller_name, $function_name);
 }
 
 function WebAPI(Array $json){
-    ProvideAbility::WebAPI($json);
+    Provide::WebAPI($json);
 }
 
 function Irregular(String $filename){
-    return ProvideAbility::Irregular($filename);
+    return Provide::Irregular($filename);
 }
