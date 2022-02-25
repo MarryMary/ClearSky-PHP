@@ -2,7 +2,7 @@
 namespace Clsk\Elena\Router;
 
 use Clsk\Elena\Router\StarNavigator;
-use Clsk\Elena\Executer\ProvideAbility;
+use Clsk\Elena\Executer\Provide;
 use Clsk\Elena\TemplateEngines\GregorioTemplateEngine;
 
 class ResourceReturn
@@ -30,7 +30,7 @@ class ResourceReturn
                         echo $templateengine->GregorioCore(file_get_contents($cinderella_root.$resource_dir."CSS/".$path), array(), true);
                         exit;
                     }else{
-                        ProvideAbility::Irregular("NotFound");
+                        Provide::Irregular("NotFound");
                     }
                 }else if(strtolower($params[0]) == "js" || strtolower($params[0]) == "javascript"){
                     header('Content-Type: text/javascript;', 'charset=utf-8');
@@ -49,7 +49,7 @@ class ResourceReturn
                         echo $templateengine->GregorioCore(file_get_contents($cinderella_root.$resource_dir."JavaScript/".$path), array(), true);
                         exit;
                     }else{
-                        ProvideAbility::Irregular("NotFound");
+                        Provide::Irregular("NotFound");
                     }
                 }else if(strtolower($params[0]) == "media" || strtolower($params[0]) == "data"){
                     header('Content-type: image/jpg');
@@ -67,7 +67,7 @@ class ResourceReturn
                         echo file_get_contents($cinderella_root.$resource_dir."Data/".$path);
                         exit;
                     }else{
-                        ProvideAbility::Irregular("NotFound");
+                        Provide::Irregular("NotFound");
                     }
                 }
             }
@@ -94,7 +94,7 @@ class ResourceReturn
                         echo $templateengine->GregorioCore(file_get_contents($cinderella_root.$resource_dir."CSS/".$path), array(), true);
                         exit;
                     }else{
-                        ProvideAbility::Irregular("NotFound");
+                        Provide::Irregular("NotFound");
                     }
                 }else if(strtolower($params[0]) == "js" || strtolower($params[0]) == "javascript"){
                     header('Content-Type: text/javascript;', 'charset=utf-8');
@@ -113,7 +113,7 @@ class ResourceReturn
                         echo $templateengine->GregorioCore(file_get_contents($cinderella_root.$resource_dir."JavaScript/".$path), array(), true);
                         exit;
                     }else{
-                        ProvideAbility::Irregular("NotFound");
+                        Provide::Irregular("NotFound");
                     }
                 }else if(strtolower($params[0]) == "media" || strtolower($params[0]) == "data"){
                     $path = "";
@@ -131,7 +131,7 @@ class ResourceReturn
                         echo file_get_contents($cinderella_root.$resource_dir.$path);
                         exit;
                     }else{
-                        ProvideAbility::Irregular("NotFound");
+                        Provide::Irregular("NotFound");
                     }
                 }
             }

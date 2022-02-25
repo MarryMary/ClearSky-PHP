@@ -4,8 +4,8 @@ namespace Clsk\Elena\Tools;
 
 class UUIDFactory
 {
-    const PATTERN = 'xxxxxxxxxxxx4xxxyxxxxxxxxxxxxxxx';
-    public static function generate(): string
+    const PATTERN = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx';
+    public static function Generate(): string
     {
         $chars = str_split(self::PATTERN);
 

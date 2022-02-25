@@ -19,7 +19,7 @@ class Session{
         }else{
             $settings = FileReader::SettingGetter();
             $session_dumper = $settings["SessionDumper"];
-            $sid = UUIDFactory::generate();
+            $sid = UUIDFactory::Generate();
             self::Delete();
             $destroy = time()+TimeToTime::HourToSec(12);
             setcookie("cndrl_sID", $sid, ['path' => '/', 'secure' => true, 'httponly' => true, "samesite" => 'Strict', 'expires' => $destroy]);
@@ -67,7 +67,7 @@ class Session{
             $Session = glob('SessionDumper/*');
         }
         foreach($Session as $MS){
-            $data = self::SessionAllBack($MS);
+            $data = self::AllBack($MS);
             if(is_array($data)){
                 if(isset($data["cndrl_sLim"]) && is_numeric($data["cndrl_sLim"])){
                     if($data["cndrl_sLim"] < time()){
@@ -122,7 +122,7 @@ class Session{
                 }else{
                     $session_id = self::$cookie_sub;
                 }
-                $data = self::SessionAllBack($$session_id);
+                $data = self::AllBack($$session_id);
                 if(is_array($data)){
                     $data[$sessName] = $sessData;
                     QueryBuilder::Table("Csess")->Where("cndrl_sID", "=", $session_id)->Update([$session_id => json_encode($data)]);
@@ -134,7 +134,7 @@ class Session{
                 }else{
                     $session_id = self::$cookie_sub;
                 }
-                $data = self::SessionAllBack($session_id);
+                $data = self::AllBack($session_id);
                 if(is_array($data)){
                     $data[$sessName] = $sessData;
                     RedisConnector::RedisSetter($session_id, json_encode($data));
@@ -146,7 +146,7 @@ class Session{
                 }else{
                     $session_id = self::$cookie_sub;
                 }
-                $data = self::SessionAllBack($session_id);
+                $data = self::AllBack($session_id);
                 if(is_array($data)){
                     $data[$sessName] = $sessData;
                     file_put_contents(dirname(__FILE__)."/SessionDumper/".$session_id ,json_encode($data));
@@ -159,7 +159,7 @@ class Session{
 
     public static function OnceInsert(Array $sessData = array()){
         if(self::Breath()){
-            $data = self::SessionAllBack($_COOKIE["cndrl_sID"]);
+            $data = self::AllBack($_COOKIE["cndrl_sID"]);
             $settings = FileReader::SettingGetter();
             $session_dumper = $settings["SessionDumper"];
             foreach($sessData as $sData => $sValue){
@@ -204,7 +204,7 @@ class Session{
         }
     }
 
-    public static function SessionReader(String $String){
+    public static function Reader(String $String){
         $settings = FileReader::SettingGetter();
         $session_dumper = $settings["SessionDumper"];
         if(self::Breath()){
@@ -248,7 +248,7 @@ class Session{
         }
     }
 
-    public static function SessionAllBack(String $Key){
+    public static function AllBack(String $Key){
         $settings = FileReader::SettingGetter();
         $session_dumper = $settings["SessionDumper"];
         if(self::Breath()){
@@ -282,7 +282,7 @@ class Session{
             }else{
                 $session_id = self::$cookie_sub;
             }
-            $data = self::SessionAllBack($session_id);
+            $data = self::AllBack($session_id);
             if(is_array($data) && array_key_exists($String, $data)){
                 return $data[$String];
             }else{
@@ -299,7 +299,7 @@ class Session{
             }else{
                 $session_id = self::$cookie_sub;
             }
-            $data = self::SessionAllBack($session_id);
+            $data = self::AllBack($session_id);
             if(is_array($data) && array_key_exists($String, $data)){
                 return true;
             }else{

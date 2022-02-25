@@ -1,7 +1,11 @@
 <?php
 namespace Clsk\Elena\TemplateEngines\Orthia\Core;
 
-use TemplateFunctions\Orthia\UserFunction;
+include dirname(__FILE__)."/../vendor/autoload.php";
+
+use Clsk\Elena\TemplateEngines\Orthia\Core\ClearSkyOrthiaException;
+use Clsk\Elena\TemplateEngines\Orthia\Core\OrthiaBuildInFunctions;
+use UserFunction\UserFunction;
 
 class Analyzer
 {
@@ -66,7 +70,7 @@ class Analyzer
                     if(isset(${$val_trimed[0]}) && strpos($line, $v) !== false){
                         if(count($val_trimed) != 1){
                             $FunctionInstance = new OrthiaBuildInFunctions($this->param, $this->parsemode);
-                            $line = $FunctionInstance->ArrayAnalyzer(${$val_trimed[0]}, $val_untrimed);
+                            $line = str_replace($v, $FunctionInstance->ArrayAnalyzer(${$val_trimed[0]}, $val_untrimed), $line);
                         }else{
                             if(is_array(${$val_trimed[0]})){
                                 ob_start();

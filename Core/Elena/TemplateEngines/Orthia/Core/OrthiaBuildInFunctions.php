@@ -1,8 +1,9 @@
 <?php
 namespace Clsk\Elena\TemplateEngines\Orthia\Core;
 
-use Clsk\Elena\Tools\UUIDFactory;
+use Clsk\Elena\TemplateEngines\Orthia\Core\ClearSkyOrthiaException;
 use Clsk\Elena\Session\Session;
+use Clsk\Elena\Tools\UUIDFactory;
 
 class OrthiaBuildInFunctions
 {
@@ -92,7 +93,7 @@ class OrthiaBuildInFunctions
 
     public function convey(String $path)
     {
-        $path = dirname(__FILE__)."/../../../../../Web/Templates/Normal".trim(trim(trim(trim(trim($path), "/"), "\\"), "'"), '"');
+        $path = dirname(__FILE__)."/../Template/".trim(trim(trim(trim(trim($path), "/"), "\\"), "'"), '"');
         if(file_exists($path)){
             $template = file_get_contents($path);
             $AnalyzerInstance = new Analyzer();
@@ -101,5 +102,23 @@ class OrthiaBuildInFunctions
         }else{
             return "";
         }
+    }
+
+    public function OL(String $oneLineCode)
+    {
+        $template = "";
+        $onelineparse = explode(";", $oneLineCode);
+        foreach($onelineparse as $code){
+            $codeparsed = explode("|", $code);
+            if(count($codeparsed) == 2){
+                $template .= "{% ".trim($codeparsed[0])." %}\n";
+                $template .= trim($codeparsed[1])."\n";
+            }else if(count($codeparsed) == 1 && strpos($codeparsed[0],'end') !== false){
+                $template .= "{% ".trim($codeparsed[0])." %}\n";
+            }
+        }
+        $AnalyzerInstance = new Analyzer();
+        $template = $AnalyzerInstance->Main($template, $this->params, False, "phper");
+        return $template;
     }
 }

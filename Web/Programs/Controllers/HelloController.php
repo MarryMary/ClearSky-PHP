@@ -17,9 +17,9 @@ class HelloController{
         $lang = "ja";
         $title = "Hello!";
         $variable_test = "これは変数";
-        $array = ["これは", "配列"];
-        $access_test = ["Access" => ["test", "a" => "こんにちは。"]];
-        $vardump_test = ["配列をそのまま表示させると", "var_dumpと同じ動作になります。"];
+        $array = ["this is ", "array"];
+        $access_test = ["Access" => ["test", "a" => "Hello!"]];
+        $vardump_test = ["if you showing array, ", "neary moving var_dump"];
         echo Provide::Reader("Hello", compact("lang", "title", "variable_test", "array", "access_test"));
     }
 }

@@ -2,6 +2,9 @@
 
 namespace Clsk\Elena\TemplateEngines\Orthia\Core;
 
+use Clsk\Elena\TemplateEngines\Orthia\Core\ClearSkyOrthiaException;
+
+
 class OrthiaBlockFunction
 {
     public $terms = "";
@@ -26,10 +29,10 @@ class OrthiaBlockFunction
         }
 
         if(eval("return ".$terms.";")){
-            return True;
+            return [True, "if"];
         }else{
             $this->if_pathed = True;
-            return False;
+            return [False, "if"];
         }
     }
 
@@ -40,13 +43,13 @@ class OrthiaBlockFunction
         }
 
         if(eval("return ".$terms.";") && $this->if_pathed){
-            return True;
+            return [True, "if"];
         }else{
             if($this->if_pathed){
-                return False;
+                return [False, "if"];
             }else {
                 $this->elif_pathed = True;
-                return False;
+                return [False, "if"];
             }
         }
     }
@@ -62,10 +65,10 @@ class OrthiaBlockFunction
             $$ORTHIAkey = $ORTHIAval;
         }
 
-        if($this->if_pathed && $this->elif_pathed){
-            return True;
+        if($this->if_pathed || $this->elif_pathed){
+            return [False, "if"];
         }else{
-            return False;
+            return [True, "if"];
         }
     }
 
@@ -170,8 +173,17 @@ class OrthiaBlockFunction
             if(count($initializer) == 2){
                 $initializer_variable = ltrim(trim($initializer[0]), "$");
                 $initializer_value = trim($initializer[1]);
-                if(is_numeric($initializer_value)){
-                    $$initializer_variable = (int)$initializer_value;
+                //TODO 代入されたのが変数または関数である場合
+                if(is_numeric($initializer_value) || isset($$initializer_value) && is_int($$initializer_value) || is_int(eval("return ".$$initializer_value.";"))){
+                    if(is_numeric($initializer_value)) {
+                        $$initializer_variable = (int)$initializer_value;
+                    }else if(isset($$initializer_value) && is_int($$initializer_value)){
+                        $$initializer_variable = $$initializer_value;
+                    }else if(is_int(eval("return ".$$initializer_value.";"))){
+                        $$initializer_variable = eval("reuturn ".$$initializer_variable.";");
+                    }else{
+                        $$intiializer_variable = 0;
+                    }
                     while(True){
                         if(eval("return ".$variable_term.";")){
                             break;
@@ -221,7 +233,10 @@ class OrthiaBlockFunction
 
     public function endif(String $template)
     {
-        return $template;
+        $params = $this->params;
+        $AnalyzerInstance = new Analyzer();
+        $returned = $AnalyzerInstance->Main($template, $params, False, $this->parsemode);
+        return $returned;
     }
 
     public function endcomment(String $dumped)

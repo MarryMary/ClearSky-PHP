@@ -10,7 +10,7 @@ class FileUploader
     {
         $clearsky_root = dirname(__FILE__)."/../../../Web/DumpFile/";
         $tempfile = $_FILES[$form_name]['tmp_name'];
-        $filename = UUIDFactory::generate().$_FILES[$form_name]['name'];
+        $filename = UUIDFactory::Generate().$_FILES[$form_name]['name'];
         
         if (is_uploaded_file($tempfile)) {
             if ( move_uploaded_file($tempfile , $clearsky_root.$filename )) {
