@@ -16,24 +16,22 @@ class QueryBuilder{
     private static $table;
     private static $col;
     private static $TermsQuery;
-    private static $terms;
-    private static $WhereCalled;
+    private static $terms = array();
+    private static $WhereCalled = False;
     private static $JoinQuery;
     private static $pdo;
     private static $query;
     private static $stmt;
     public function __construct()
     {
-        self::$debug = False;
-        self::$table = "";
-        self::$col = array();
-        self::$TermsQuery = "";
-        self::$terms = array();
-        self::$WhereCalled = "";
-        self::$JoinQuery = "";
-        self::$pdo = "";
         self::$query = "";
-        self::$stmt = "";
+        self::$TermsQuery = "";
+        self::$JoinQuery = "";
+        self::$terms = array();
+        self::$WhereCalled = false;
+        self::$debug = false;
+        self::$stmt = NULL;
+        self::$col = ["*"];
         $settings = FileReader::SettingGetter();
 
         self::$pdo = new \PDO($settings['DBEngine'].':dbname='.$settings['DBName'].';host='.$settings['DBHost'].';charset='.$settings['DBChr'].";port=".$settings['DBPort'], $settings['DBUser'], $settings['DBPass']);
@@ -44,7 +42,6 @@ class QueryBuilder{
         if(trim($table) != "") {
             self::$table = $table;
             self::$debug = $debug;
-            self::$col = ["*"];
             if(FileReader::SettingGetter()["ApplicationTestMode"]){
                 self::$debug = True;
             }
@@ -71,9 +68,9 @@ class QueryBuilder{
     public function Where(String $Col, String $Is, String $Term, Bool $IsNot = False)
     {
         if(trim($Col) != "" and trim($Is) != "" and trim($Term) != "") {
-            $keyword = "WHERE";
+            $keyword = " WHERE";
             if ($IsNot) {
-                $keyword = "WHERE NOT";
+                $keyword = " WHERE NOT";
             }
             self::$WhereCalled = True;
             array_push(self::$terms, $Term);
@@ -157,7 +154,7 @@ class QueryBuilder{
             $cols .= $col.", ";
         }
         $cols = rtrim($cols, ",");
-        self::$query = "SELECT ".trim($cols)." FROM ".trim(self::$table).self::$JoinQuery.self::$TermsQuery.$orderby;
+        self::$query = "SELECT ".rtrim(trim($cols), ",")." FROM ".trim(self::$table).self::$JoinQuery.self::$TermsQuery.$orderby;
         self::$stmt = self::$pdo->prepare(self::$query);
         foreach(self::$terms as $terms => $values){
             $types = [
@@ -175,23 +172,23 @@ class QueryBuilder{
                     break;
                 }
             }
-            if(self::$debug){
-                return $this;
+        }
+        if(self::$debug){
+            return $this;
+        }else{
+            if($mode){
+                self::$stmt->execute();
+                if($OtherQueryUse){
+                    return [self::$stmt->fetch(), $this];
+                }else {
+                    return [self::$stmt->fetch()];
+                }
             }else{
-                if($mode){
-                    self::$stmt->execute();
-                    if($OtherQueryUse){
-                        return [self::$stmt->fetch(), $this];
-                    }else {
-                        return [self::$stmt->fetch()];
-                    }
-                }else{
-                    self::$stmt->execute();
-                    if($OtherQueryUse){
-                        return [self::$stmt->fetchAll(), $this];
-                    }else {
-                        return [self::$stmt->fetchAll()];
-                    }
+                self::$stmt->execute();
+                if($OtherQueryUse){
+                    return [self::$stmt->fetchAll(), $this];
+                }else {
+                    return [self::$stmt->fetchAll()];
                 }
             }
         }
@@ -268,6 +265,7 @@ class QueryBuilder{
     {
         $values = array();
         $setquery = "";
+        $paramquery = "";
         foreach($insert_value as $col => $value){
             if($IsHTMLSPECIALCHARS){
                 $value = htmlspecialchars($value);
@@ -277,7 +275,9 @@ class QueryBuilder{
             $paramquery .= "?,";
         }
         $setquery = rtrim($setquery, ",");
-        self::$query = "INSERT INTO ".trim(self::$table)." (".trim($setquery).") VALUES (".trim($paramquery).")";
+        self::$query = "INSERT INTO ".trim(self::$table)." (".trim($setquery).") VALUES (".rtrim(trim($paramquery), ",").")";
+        self::$stmt = self::$pdo->prepare(self::$query);
+        echo self::$query;
         foreach($values as $k => $v){
             $types = [
                 "boolean" => \PDO::PARAM_BOOL,
@@ -303,7 +303,7 @@ class QueryBuilder{
 
     public function CountRow()
     {
-        self::$stmt->rowCount();
+        return self::$stmt->rowCount();
     }
 
     public function Create(Array $columns = array())
