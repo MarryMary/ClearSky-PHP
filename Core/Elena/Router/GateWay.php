@@ -9,6 +9,8 @@ use Clsk\Elena\Session\Session;
 class GateWay{
     public $param;
     private static function RoutingCore(Array $user_route, Bool $mode=false){
+        $isHTTPS = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://');
+        $host = $_SERVER['HTTP_HOST'];
         $route = substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'],'?'));
         $route = str_replace("/", ",", $route);
         $route = str_replace("\\", ",", $route);
@@ -21,12 +23,17 @@ class GateWay{
         $uri_params = array();
         $i = 0;
         $ri = 0;
-        $settings = FileReader::RouteSettingGetter();
-        $exclude = ltrim(rtrim($settings["Exclusion"], "/"), "/");
+        $settings = FileReader::SettingGetter();
+        $exclude = ltrim(rtrim($settings["APPURL"], "/"), "/");
+        $exclude = ltrim(ltrim($exclude, $isHTTPS), $host);
+        $exclude = ltrim(rtrim($exclude, "/"), "/");
+        $exclude_list = explode($exclude, "/");
         while(true){
             if(count($route) > $i){
+                // strtolower($exclude) == strtolower($route[$i]) ネスト
                 if($i == 0 && array_key_exists($i, $route) && strtolower($exclude) == strtolower($route[$i])){
                     $i++;
+                    // ↓別関数化
                 }else if(array_key_exists($ri, $user_route) && strpos($user_route[$ri],'@') !== false && array_key_exists($i, $route) && !$param_read_flag || $mode && !$param_read_flag){
                     $param_check = ltrim($user_route[$ri], "@");
                     $param_read = explode(":", $param_check);

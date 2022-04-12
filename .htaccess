@@ -1,7 +1,0 @@
-RewriteEngine On
-RewriteBase /ClearSky
-RewriteCond %{REQUEST_URI} !(^/ClearSky/Web/DumpFile/)
-RewriteCond %{REQUEST_URI} !(^/ClearSky/Web/Resources/Data/)
-RewriteCond %{REQUEST_URI} !(^/ClearSky/Web/Resources/CSS/)
-RewriteCond %{REQUEST_URI} !(^/ClearSky/Web/Resources/JavaScript/)
-RewriteRule ^(.*)$ Exposure/index.php [L]
