@@ -9,13 +9,29 @@ use Clsk\Elena\Session\Session;
 class GateWay{
     public $param;
     private static function RoutingCore(Array $user_route, Bool $mode=false){
+        // http or https?
         $isHTTPS = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://');
+
+        // domain?
         $host = $_SERVER['HTTP_HOST'];
+
+        // call framework setting reader tool
+        $settings = FileReader::SettingGetter();
+
+        // get exclude address pattern from framework setting.
+        $exclude = ltrim(rtrim($settings["APPURL"], "/"), "/");
+        $exclude = ltrim(ltrim($exclude, $isHTTPS), $host);
+        $exclude = str_replace("\\", "/", $exclude);
+        $exclude = ltrim(rtrim($exclude, "/"), "/");
+
+        // get access address after remove exclude address from access address.
         $route = substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'],'?'));
+        $route = str_replace($exclude, "", $route);
         $route = str_replace("/", ",", $route);
         $route = str_replace("\\", ",", $route);
         $route = ltrim($route, ",");
         $route = explode(",", $route);
+
         $param_read_flag = false;
         $param_read_count = 2;
         $param_read_max = 0;
@@ -23,17 +39,10 @@ class GateWay{
         $uri_params = array();
         $i = 0;
         $ri = 0;
-        $settings = FileReader::SettingGetter();
-        $exclude = ltrim(rtrim($settings["APPURL"], "/"), "/");
-        $exclude = ltrim(ltrim($exclude, $isHTTPS), $host);
-        $exclude = ltrim(rtrim($exclude, "/"), "/");
-        $exclude_list = explode($exclude, "/");
         while(true){
             if(count($route) > $i){
-                // strtolower($exclude) == strtolower($route[$i]) ネスト
-                if($i == 0 && array_key_exists($i, $route) && strtolower($exclude) == strtolower($route[$i])){
+                if($i == 0 && array_key_exists($i, $route)){
                     $i++;
-                    // ↓別関数化
                 }else if(array_key_exists($ri, $user_route) && strpos($user_route[$ri],'@') !== false && array_key_exists($i, $route) && !$param_read_flag || $mode && !$param_read_flag){
                     $param_check = ltrim($user_route[$ri], "@");
                     $param_read = explode(":", $param_check);

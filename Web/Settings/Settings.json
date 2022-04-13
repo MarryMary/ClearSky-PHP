@@ -1,6 +1,6 @@
 {
     "APPNAME": "ClearSky",
-    "APPURL": "http://localhost:8080/ClearSkySystemCheck/Exposure/",
+    "APPURL": "http://localhost/ClearSky/Exposure/",
     "SessionLimit": "12",
     "SessionDumper": "File",
     "ApplicationTestMode": false,
