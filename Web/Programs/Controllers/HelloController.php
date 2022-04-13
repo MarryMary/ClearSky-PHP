@@ -20,6 +20,7 @@ class HelloController{
         $array = ["this is ", "array"];
         $access_test = ["Access" => ["test", "a" => "Hello!"]];
         $vardump_test = ["if you showing array, ", "neary moving var_dump"];
-        echo Provide::Reader("Hello", compact("lang", "title", "variable_test", "array", "access_test"));
+        $test = "test";
+        echo Provide::Reader("Hello", compact("lang", "title", "variable_test", "array", "access_test", "test"));
     }
 }

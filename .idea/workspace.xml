@@ -2,8 +2,15 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f135f19e-124e-481b-8f8d-afc2af79dd43" name="変更" comment="">
-      <change beforePath="$PROJECT_DIR$/Core/Elena/Router/GateWay.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/Router/GateWay.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/Settings/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Web/Settings/Settings.json" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/SkipFunctionCheck.php" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/can_skip_using_function.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Elena/Exception/ClskException.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/Exception/ClskException.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/Analyzer.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/Analyzer.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/OrthiaTypeEngine.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/OrthiaBlockCodeEngine.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/Programs/Controllers/HelloController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/Programs/Controllers/HelloController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/Templates/Normal/Hello.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/Templates/Normal/Hello.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -35,6 +42,7 @@
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="preferences.editor" />
     <property name="vue.rearranger.settings.migration" value="true" />
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="アプリケーションレベル" UseSingleDictionary="true" transferred="true" />
@@ -48,10 +56,22 @@
       <workItem from="1649757559795" duration="876000" />
       <workItem from="1649808365376" duration="35000" />
       <workItem from="1649808421666" duration="17000" />
+      <workItem from="1649815013875" duration="8300000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
 </project>

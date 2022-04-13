@@ -1,10 +1,3 @@
-{% comment %}
-    Welcome to ClearSky PHP Framework!
-    This is comment.When analyzing this file, this comment is delete automatically.
-    ClearSky including ORTHIA Template engine can extends Template.
-    This template is child, "HelloFrame.php" is parent.
-{% endcomment %}
-
 
 {% parts_block(content) %}
     
@@ -22,7 +15,11 @@
         <p>{{ $i }}</p>
     {% endfor %}
 
-
+    {% if($test == "test") %}
+        {% foreach($array as $key => $value) %}
+            <p>{{ $key }} => {{ $value }}</p>
+        {% endforeach %}
+    {% endif %}
 {% endparts_block %}
 
 

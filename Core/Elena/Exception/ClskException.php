@@ -22,12 +22,12 @@ class ClskException
             exit;
         }else{
             $template = file_get_contents(dirname(__FILE__)."/ExceptionTemplate.html");
-            $template = str_replace("{{MESSAGE}}", $e->getMessage(), $template);
-            $template = str_replace("{{LINE}}", $e->getLine(), $template);
-            $template = str_replace("{{TRACEBACK}}", trim($e->getTraceAsString()), $template);
-            $highlight = explode("\n", file_get_contents($e->getFile()));
-            $template = str_replace("{{HIGHLIGHT}}", trim($highlight[$e->getLine()-1]), $template);
-            $template = str_replace("{{FILE}}", $e->getFile(), $template);
+            $template = str_replace("{{MESSAGE}}", htmlspecialchars($e->getMessage()), $template);
+            $template = str_replace("{{LINE}}", htmlspecialchars($e->getLine()), $template);
+            $template = str_replace("{{TRACEBACK}}", trim(htmlspecialchars($e->getTraceAsString())), $template);
+            $highlight = explode("\n", file_get_contents(htmlspecialchars($e->getFile())));
+            $template = str_replace("{{HIGHLIGHT}}", trim(htmlspecialchars($highlight[$e->getLine()-1])), $template);
+            $template = str_replace("{{FILE}}", htmlspecialchars($e->getFile()), $template);
             echo $template;
             exit;
         }
