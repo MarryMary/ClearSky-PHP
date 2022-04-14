@@ -47,8 +47,20 @@ class Provide
     }
 
     public static function JumpTo(String $to = "/"){
-        $settings = FileReader::RouteSettingGetter();
-        $exclude = ltrim(rtrim($settings["Exclusion"], "/"), "/");
-        header("Location: /".$exclude.$to);
+        // http or https?
+        $isHTTPS = (empty($_SERVER['HTTPS']) ? 'http://' : 'https://');
+
+        // domain?
+        $host = $_SERVER['HTTP_HOST'];
+
+        $settings = FileReader::SettingGetter();
+
+        // get exclude address pattern from framework setting.
+        $exclude = ltrim(rtrim($settings["APPURL"], "/"), "/");
+        $exclude = ltrim(ltrim($exclude, $isHTTPS), $host);
+        $exclude = str_replace("\\", "/", $exclude);
+        $exclude = ltrim(rtrim($exclude, "/"), "/");
+
+        header("Location: /".$exclude."/Exposure".$to);
     }
 }

@@ -19,7 +19,7 @@ class Analyzer
                 $this->template = $template;
                 $this->param = $param;
                 $this->parsemode = $writer;
-                $analyzer = new OrthiaTypeEngine();
+                $analyzer = new OrthiaBlockCodeEngine();
                 $this->template = $analyzer->Entrance($this->template, $this->param, $this->parsemode);
                 $this->VariableInserter();
                 return $this->template;
@@ -27,7 +27,7 @@ class Analyzer
                 $this->template = $template;
                 $this->param = array();
                 $this->parsemode = $writer;
-                $analyzer = new OrthiaTypeEngine();
+                $analyzer = new OrthiaBlockCodeEngine();
                 $this->template = $analyzer->Entrance($this->template, $this->param, $this->parsemode);
                 return $this->template;
             }else{

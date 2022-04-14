@@ -4,6 +4,7 @@ namespace Clsk\Elena\TemplateEngines\Orthia\Core;
 use Clsk\Elena\TemplateEngines\Orthia\Core\ClearSkyOrthiaException;
 use Clsk\Elena\Session\Session;
 use Clsk\Elena\Tools\UUIDFactory;
+use Clsk\Elena\Tools\FileReader;
 
 class OrthiaBuildInFunctions
 {
@@ -14,6 +15,12 @@ class OrthiaBuildInFunctions
     {
         $this->params = $params;
         $this->parsemode = $mode;
+    }
+
+    public function SettingReader(String $key)
+    {
+        $setting = FileReader::SettingGetter();
+        return $setting[$key];
     }
 
     public function csrf_token()
@@ -93,7 +100,7 @@ class OrthiaBuildInFunctions
 
     public function convey(String $path)
     {
-        $path = dirname(__FILE__)."/../Template/".trim(trim(trim(trim(trim($path), "/"), "\\"), "'"), '"');
+        $path = dirname(__FILE__)."/../../../../../Web/Templates/".trim(trim(trim(trim(trim($path), "/"), "\\"), "'"), '"');
         if(file_exists($path)){
             $template = file_get_contents($path);
             $AnalyzerInstance = new Analyzer();

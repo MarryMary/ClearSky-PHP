@@ -66,9 +66,9 @@ class OrthiaBlockFunction
         }
 
         if($this->if_pathed || $this->elif_pathed){
-            return [False, "if"];
-        }else{
             return [True, "if"];
+        }else{
+            return [False, "if"];
         }
     }
 
