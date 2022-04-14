@@ -15,11 +15,12 @@ class HelloController{
     public function Index()
     {
         $lang = "ja";
-        $title = "Hello!";
+        $title = "test";
         $variable_test = "これは変数";
         $array = ["this is ", "array"];
         $access_test = ["Access" => ["test", "a" => "Hello!"]];
         $vardump_test = ["if you showing array, ", "neary moving var_dump"];
-        echo Provide::Reader("Hello", compact("lang", "title", "variable_test", "array", "access_test"));
+        $test = "hello!";
+        echo Provide::Reader("Hello", compact("lang", "title", "variable_test", "array", "access_test", "test"));
     }
 }

@@ -22,6 +22,14 @@
         <p>{{ $i }}</p>
     {% endfor %}
 
+    {% comment %}
+        {% if($test == "test") %}
+            {% foreach($array as $key => $value) %}
+                <p>{{ $key }} => {{ $value }}</p>
+            {% endforeach %}
+        {% endif %}
+    {% endcomment %}
+
 
 {% endparts_block %}
 

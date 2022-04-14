@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f135f19e-124e-481b-8f8d-afc2af79dd43" name="変更" comment="">
-      <change beforePath="$PROJECT_DIR$/Core/Elena/Router/GateWay.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/Router/GateWay.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/Settings/Settings.json" beforeDir="false" afterPath="$PROJECT_DIR$/Web/Settings/Settings.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/Programs/Controllers/HelloController.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/Programs/Controllers/HelloController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Web/Templates/Normal/Hello.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/Templates/Normal/Hello.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -48,6 +48,7 @@
       <workItem from="1649757559795" duration="876000" />
       <workItem from="1649808365376" duration="35000" />
       <workItem from="1649808421666" duration="17000" />
+      <workItem from="1649838639161" duration="14000" />
     </task>
     <servers />
   </component>
