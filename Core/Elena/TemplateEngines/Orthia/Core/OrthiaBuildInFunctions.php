@@ -111,6 +111,12 @@ class OrthiaBuildInFunctions
         }
     }
 
+    public function resources(String $URL)
+    {
+        $settings = FileReader::SettingGetter();
+        $base_url = $settings["APPURL"]."";
+    }
+
     public function OL(String $oneLineCode)
     {
         $template = "";

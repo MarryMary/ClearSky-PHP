@@ -139,7 +139,7 @@ class OrthiaBlockCodeEngine
                             $endcounter ++;
                         }
                     }
-                } else if ($this->UserCreateFunctionJudgement($val) && !$dropping && !$dumping) {
+                } else if ($this->UserCreateFunctionJudgement($method_name) && !$dropping && !$dumping) {
                     $is_code = True;
                     $UserFunction = new UserFunction();
                     $pattern = "{\((.*)\)}";
@@ -151,7 +151,7 @@ class OrthiaBlockCodeEngine
                         $result = $UserFunction->$method_name($match);
                     }
 
-                    $this->template .= $line."\n";
+                    $this->template .= str_replace($variable, $result, $line)."\n";
                 } else {
                     if($dumping || $dropping || $dump_nextblock){
                         $is_code = False;

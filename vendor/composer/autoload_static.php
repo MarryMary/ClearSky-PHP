@@ -11,6 +11,10 @@ class ComposerStaticInit5860ef6ab4c29e65024360c914d3e262
         array (
             'Web\\' => 4,
         ),
+        'T' => 
+        array (
+            'TemplateFunctions\\' => 18,
+        ),
         'C' => 
         array (
             'Clsk\\' => 5,
@@ -21,6 +25,10 @@ class ComposerStaticInit5860ef6ab4c29e65024360c914d3e262
         'Web\\' => 
         array (
             0 => __DIR__ . '/../..' . '/Web',
+        ),
+        'TemplateFunctions\\' => 
+        array (
+            0 => __DIR__ . '/../..' . '/Web/Programs/TemplateFunctions',
         ),
         'Clsk\\' => 
         array (

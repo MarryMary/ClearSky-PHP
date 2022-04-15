@@ -7,5 +7,6 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'Web\\' => array($baseDir . '/Web'),
+    'TemplateFunctions\\' => array($baseDir . '/Web/Programs/TemplateFunctions'),
     'Clsk\\' => array($baseDir . '/Core'),
 );
