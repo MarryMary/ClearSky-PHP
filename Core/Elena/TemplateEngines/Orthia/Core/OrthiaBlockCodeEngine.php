@@ -6,7 +6,7 @@ use Clsk\Elena\TemplateEngines\Orthia\Core\ClearSkyOrthiaException;
 use Clsk\Elena\TemplateEngines\Orthia\Core\OrthiaBlockFunction;
 use Clsk\Elena\TemplateEngines\Orthia\Core\OrthiaBuildInFunctions;
 use Clsk\Elena\TemplateEngines\Orthia\Core\SkipFunctionCheck;
-use UserFunction\UserFunction;
+use TemplateFunctions\Orthia\UserFunction;
 
 class OrthiaBlockCodeEngine
 {
@@ -144,11 +144,13 @@ class OrthiaBlockCodeEngine
                     $UserFunction = new UserFunction();
                     $pattern = "{\((.*)\)}";
                     preg_match($pattern, $val, $match);
+                    $result = "";
                     if(isset($match[1]) && !$dropping && !$dumping) {
                         $result = $UserFunction->$method_name($match[1]);
                     }else if(!$dropping && !$dumping){
                         $result = $UserFunction->$method_name($match);
                     }
+
                     $this->template .= $line."\n";
                 } else {
                     if($dumping || $dropping || $dump_nextblock){
