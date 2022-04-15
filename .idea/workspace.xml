@@ -2,25 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="09ca9ae9-cf91-490b-a395-104daa7f7aa7" name="変更" comment="">
-      <change afterPath="$PROJECT_DIR$/Web/Templates/Normal/SampleTemplate/Hello.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/Templates/Normal/SampleTemplate/HelloFrame.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/Templates/Normal/SampleTemplate/SampleFrames/footer.php" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Web/Templates/Normal/SampleTemplate/SampleFrames/navbar.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Elena/Exception/ClskException.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/Exception/ClskException.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/OrthiaBlockCodeEngine.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/OrthiaBlockCodeEngine.php" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/OrthiaBuildInFunctions.php" beforeDir="false" afterPath="$PROJECT_DIR$/Core/Elena/TemplateEngines/Orthia/Core/OrthiaBuildInFunctions.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/Programs/TemplateFunctions/Orthia/UserFunction.php" beforeDir="false" afterPath="$PROJECT_DIR$/Web/Programs/TemplateFunctions/Orthia/UserFunction.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/Templates/Normal/Hello.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Web/Templates/Normal/HelloFrame.php" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/autoload.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/autoload.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/ClassLoader.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_classmap.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_namespaces.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_psr4.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_real.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_real.php" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/vendor/composer/autoload_static.php" beforeDir="false" afterPath="$PROJECT_DIR$/vendor/composer/autoload_static.php" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -70,7 +52,7 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1649992936278</updated>
-      <workItem from="1649992941903" duration="2115000" />
+      <workItem from="1649992941903" duration="2398000" />
     </task>
     <servers />
   </component>

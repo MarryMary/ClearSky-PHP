@@ -114,7 +114,9 @@ class OrthiaBuildInFunctions
     public function resources(String $URL)
     {
         $settings = FileReader::SettingGetter();
-        $base_url = $settings["APPURL"]."";
+        $base_url = str_replace("/Exposure", "",$settings["APPURL"]);
+        $url = $base_url."Resources/".trim(trim(trim($URL), "/"), "/");
+        return $url;
     }
 
     public function OL(String $oneLineCode)
