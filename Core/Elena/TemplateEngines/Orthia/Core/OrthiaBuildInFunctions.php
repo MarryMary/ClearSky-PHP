@@ -115,7 +115,7 @@ class OrthiaBuildInFunctions
     {
         $settings = FileReader::SettingGetter();
         $base_url = str_replace("/Exposure", "",$settings["APPURL"]);
-        $url = $base_url."Resources/".trim(trim(trim($URL), "/"), "/");
+        $url = $base_url."Web/Resources/".trim(trim(trim($URL), "/"), "/");
         return $url;
     }
 

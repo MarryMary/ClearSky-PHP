@@ -165,18 +165,25 @@ class OrthiaBlockCodeEngine
                     $result = "";
                     if(isset($match[1]) && !$dropping && !$dumping) {
                         if(strpos($match[1], '$') !== false){
-                            if(strpos($match[1], '\\') !== false || !isset($match[1]))
-                            $result = $UserFunction->$method_name($match[1]);
+                            if(strpos($match[1], '\\') !== false || !isset($match[1])){
+                                $result = $UserFunction->$method_name($match[1]);
+                            }else{
+                                $matched = str_replace("$", "", $match[1]);
+                                $result = $UserFunction->$method_name($$matched);
+                            }
                         }else{
-                            $result = $UserFunction->$method_name($$match[1]);
+                            $result = $UserFunction->$method_name($match[1]);
                         }
                     }else if(!$dropping && !$dumping){
                         if(strpos($match, '$') !== false){
                             if(strpos($match, '\\') !== false || !isset($match)){
                                 $result = $UserFunction->$method_name($match);
                             }else{
-                                $result = $UserFunction->$method_name($$match);
+                                $matched = str_replace("$", "", $match);
+                                $result = $UserFunction->$method_name($$matched);
                             }
+                        }else{
+                            $result = $UserFunction->$method_name($match);
                         }
                     }
 

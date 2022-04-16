@@ -9,11 +9,30 @@
     {% paste_here(css) %}
 </head>
 <body>
+    {% convey(Normal/SampleTemplate/SampleFrames/navbar.php) %}
     <div class="container">
-        {% paste_here(contents_leftup) %}
-        {% paste_here(contents_leftbottom) %}
-        {% paste_here(contents_rightup) %}
-        {% paste_here(contents_rightbottom) %}
+        <div class="card_back">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <div class="card">
+                            {% paste_here(contents_leftup) %}
+                        </div>
+                        <div class="card">
+                            {% paste_here(contents_leftbottom) %}
+                        </div>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="card">
+                            {% paste_here(contents_rightup) %}
+                        </div>
+                        <div class="card">
+                            {% paste_here(contents_rightdown) %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 </html>
