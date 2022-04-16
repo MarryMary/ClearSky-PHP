@@ -157,15 +157,27 @@ class OrthiaBlockCodeEngine
                         }
                     }
                 } else if ($this->UserCreateFunctionJudgement($method_name) && !$dropping && !$dumping) {
+                    extract($this->params);
                     $is_code = True;
                     $UserFunction = new UserFunction();
                     $pattern = "{\((.*)\)}";
                     preg_match($pattern, $val, $match);
                     $result = "";
                     if(isset($match[1]) && !$dropping && !$dumping) {
-                        $result = $UserFunction->$method_name($match[1]);
+                        if(strpos($match[1], '$') !== false){
+                            if(strpos($match[1], '\\') !== false || !isset($match[1]))
+                            $result = $UserFunction->$method_name($match[1]);
+                        }else{
+                            $result = $UserFunction->$method_name($$match[1]);
+                        }
                     }else if(!$dropping && !$dumping){
-                        $result = $UserFunction->$method_name($match);
+                        if(strpos($match, '$') !== false){
+                            if(strpos($match, '\\') !== false || !isset($match)){
+                                $result = $UserFunction->$method_name($match);
+                            }else{
+                                $result = $UserFunction->$method_name($$match);
+                            }
+                        }
                     }
 
                     $this->template .= str_replace($variable, $result, $line)."\n";

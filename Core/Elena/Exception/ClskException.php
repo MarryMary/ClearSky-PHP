@@ -22,6 +22,9 @@ class ClskException
             exit;
         }else{
             $template = file_get_contents(dirname(__FILE__)."/ExceptionTemplate.html");
+            $escaped_message = str_replace('"', '', $e->getMessage);
+            $escaped_message = str_replace("'", "", $escaped_message);
+            $template = str_replace("{{MESSAGE_ESCAPED}}", htmlspecialchars($escaped_message), $template);
             $template = str_replace("{{MESSAGE}}", htmlspecialchars($e->getMessage()), $template);
             $template = str_replace("{{LINE}}", htmlspecialchars($e->getLine()), $template);
             $template = str_replace("{{TRACEBACK}}", trim(htmlspecialchars($e->getTraceAsString())), $template);
