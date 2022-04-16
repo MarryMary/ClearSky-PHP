@@ -24,9 +24,7 @@ class OrthiaBlockFunction
 
     public function if($terms)
     {
-        foreach($this->params as $ORTHIAkey => $ORTHIAval){
-            $$ORTHIAkey = $ORTHIAval;
-        }
+        extract($this->params);
 
         if(eval("return ".$terms.";")){
             return [True, "if"];
@@ -38,9 +36,7 @@ class OrthiaBlockFunction
 
     public function elif($terms)
     {
-        foreach($this->params as $ORTHIAkey => $ORTHIAval){
-            $$ORTHIAkey = $ORTHIAval;
-        }
+        extract($this->params);
 
         if(eval("return ".$terms.";") && $this->if_pathed){
             return [True, "if"];
@@ -61,9 +57,7 @@ class OrthiaBlockFunction
 
     public function else()
     {
-        foreach($this->params as $ORTHIAkey => $ORTHIAval){
-            $$ORTHIAkey = $ORTHIAval;
-        }
+        extract($this->params);
 
         if($this->if_pathed || $this->elif_pathed){
             return [True, "if"];
@@ -85,9 +79,7 @@ class OrthiaBlockFunction
 
     public function foreach(String $terms)
     {
-        foreach($this->params as $key => $val){
-            $$key = $val;
-        }
+        extract($this->params);
         $this->terms = $terms;
         return True;
     }
@@ -103,9 +95,7 @@ class OrthiaBlockFunction
     {
         $result = "";
         $param = $this->params;
-        foreach($this->params as $PARAMS_VARIABLE => $VARIABLE_VALUE){
-            $$PARAMS_VARIABLE = $VARIABLE_VALUE;
-        }
+        extract($this->params);
         $terms = $this->terms;
         $exploded_terms = explode("as", $terms);
         if(count($exploded_terms) == 2){
@@ -161,9 +151,7 @@ class OrthiaBlockFunction
     {
         $param = $this->params;
         $result = "";
-        foreach($this->params as $PARAMS_VARIABLE => $VARIABLE_VALUE){
-            $$PARAMS_VARIABLE = $VARIABLE_VALUE;
-        }
+        extract($this->params);
         $terms = $this->terms;
         $exploded_terms = explode(";", $terms);
         if(count($exploded_terms) == 3){

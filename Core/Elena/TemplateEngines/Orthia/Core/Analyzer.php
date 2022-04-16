@@ -45,11 +45,7 @@ class Analyzer
 
     private function VariableInserter()
     {
-        foreach($this->param as $CLSKORTHIAKEY => $CLSKORTHIAVAL) {
-            $$CLSKORTHIAKEY = $CLSKORTHIAVAL;
-        }
-        unset($CLSKORTHIAKEY);
-        unset($CLSKORTHIAVAL);
+        extract($this->param);
         $prepared = "";
         $template = explode("\n", $this->template);
         $this->template = "";

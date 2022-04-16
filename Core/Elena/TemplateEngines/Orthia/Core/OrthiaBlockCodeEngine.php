@@ -34,6 +34,7 @@ class OrthiaBlockCodeEngine
         $endcounter = 0;
         $dumper = "";
         $block_start_name = "";
+        extract($this->params);
         $BuiltInBlockFunction = new OrthiaBlockFunction($this->params, $this->parsemode);
         $CanSkipUsingFunction = new SkipFunctionCheck();
         foreach($template as $key => $line){
@@ -64,10 +65,26 @@ class OrthiaBlockCodeEngine
                             $pattern = "{\((.*)\)}";
                             preg_match($pattern, $val, $match);
                             if(isset($match[1])) {
-                                $result = $BuiltInBlockFunction->$method_name($match[1]);
+                                if(strpos($match[1],'$') !== false){
+                                    if(strpos($match[1],'\\') !== false || !isset($$match[1])){
+                                        $result = $BuiltInBlockFunction->$method_name($match[1]);
+                                    }else{
+                                        $result = $BuiltInBlockFunction->$method_name($$match[1]);
+                                    }
+                                }else{
+                                    $result = $BuiltInBlockFunction->$method_name($match[1]);
+                                }
                             }else if(!$dumping && !$dropping){
                                 if(array_key_exists(0, $match)){
-                                    $result = $BuiltInBlockFunction->$method_name($match[0]);
+                                    if(strpos($match[0], '$') !== false){
+                                        if(strpos($match[0], '\\') !== false || !isset($$match[0])){
+                                            $result = $BuiltInBlockFunction->$method_name($match[0]);
+                                        }else{
+                                            $result = $BuiltInBlockFunction->$method_name($$match[0]);
+                                        }
+                                    }else{
+                                        $result = $BuiltInBlockFunction->$method_name($match[0]);
+                                    }
                                 }else{
                                     $result = $BuiltInBlockFunction->$method_name();
                                 }
