@@ -4,13 +4,6 @@ body{
 
 .card_back{
     margin-top: 30px;
-    background: lightgray;
-}
-
-.card{
     background: white;
-    margin: 10px;
-    box-shadow: 0 0 8px gray;
-    width: 425px;
-    height: 230px;
+    text-align: center;
 }

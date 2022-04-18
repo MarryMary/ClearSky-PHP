@@ -15,12 +15,8 @@ class HelloController{
     public function Index()
     {
         $lang = "ja";
-        $title = "test";
-        $variable_test = "これは変数";
-        $array = ["this is ", "array"];
-        $access_test = ["Access" => ["test", "a" => "Hello!"]];
-        $vardump_test = ["if you showing array, ", "neary moving var_dump"];
-        $test = "hello!";
-        echo Provide::Reader("SampleTemplate/Hello", compact("lang", "title", "variable_test", "array", "access_test", "test"));
+        $title = "Welcome to ClearSky Framework!!";
+
+        echo Provide::Reader("SampleTemplate/Hello", compact("lang", "title"));
     }
 }

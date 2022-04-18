@@ -18,10 +18,7 @@ if(file_exists($cinderella_root)){
             exit;
         }
         include $cinderella_root;
-        $result = ResourceReturn::ResourceRouting();
-        if(!$result){
-            echo Irregular("NotFound");
-        }
+        echo Irregular("NotFound");
     }catch(\Throwable $e){
         ClskException::ExceptionViewer($e);
     }

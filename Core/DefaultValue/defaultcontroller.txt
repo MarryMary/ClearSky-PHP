@@ -9,7 +9,7 @@ use Clsk\Elena\Session\Session;
 use Clsk\Elena\Tools\TimeToTime;
 use Clsk\Elena\Tools\FileReader;
 use Clsk\Elena\Request\RequestReceptor;
-use Clsk\Elena\Executer\ProvideAbility;
+use Clsk\Elena\Executer\Provide;
 
 class {{CONTROLLER_NAME}}{
     public function Index()
