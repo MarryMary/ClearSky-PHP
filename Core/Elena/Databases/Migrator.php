@@ -61,4 +61,33 @@ class Migrator{
             }
         }
     }
+
+    public static function SystemMigration()
+    {
+        $cinderella_root = dirname(__FILE__)."/../../../Core/Migration";
+        if(file_exists($cinderella_root)){
+            // If executing migration based on user writen file, this method is executing all file of saved in "<ProjectRoot>/Web/Migrates/".
+            foreach (glob($cinderella_root."/*") as $filename) {
+                require $filename;
+                $class = explode("/", $filename);
+                $classname = rtrim($class[count($class)-1], ".php");
+                $instance = new $classname();
+                $instance->Execution();
+            }
+        }
+    }
+
+    public static function SystemRollBack()
+    {
+        $cinderella_root = dirname(__FILE__)."/../../../Core/Migration";
+        if(file_exists($cinderella_root)){
+            foreach (glob($cinderella_root."/*") as $filename) {
+                require $filename;
+                $class = explode("/", $filename);
+                $classname = rtrim($class[count($class)-1], ".php");
+                $instance = new $classname();
+                $instance->RollBack();
+            }
+        }
+    }
 }

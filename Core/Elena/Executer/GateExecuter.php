@@ -22,3 +22,7 @@ function WebAPI(Array $json){
 function Irregular(String $filename){
     return Provide::Irregular($filename);
 }
+
+function JumpTo(String $to){
+    Provide::JumpTo($to);
+}

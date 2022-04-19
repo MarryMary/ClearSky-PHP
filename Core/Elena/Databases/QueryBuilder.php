@@ -261,7 +261,7 @@ class QueryBuilder{
         }
     }
 
-    public function Insert(Array $insert_value, Bool $IsHTMLSPECIALCHARS)
+    public function Insert(Array $insert_value, Bool $IsHTMLSPECIALCHARS = True)
     {
         $values = array();
         $setquery = "";

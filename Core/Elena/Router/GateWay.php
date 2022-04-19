@@ -18,18 +18,17 @@ class GateWay{
         // call framework setting reader tool
         $settings = FileReader::SettingGetter();
 
+        $url = $isHTTPS.$host.substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'],'?'));
+
         // get exclude address pattern from framework setting.
+
         $exclude = ltrim(rtrim($settings["APPURL"], "/"), "/");
-        $exclude = ltrim(ltrim($exclude, $isHTTPS), $host);
-        $exclude = str_replace("\\", "/", $exclude);
-        $exclude = ltrim(rtrim($exclude, "/"), "/");
+
 
         // get access address after remove exclude address from access address.
-        $route = substr($_SERVER['REQUEST_URI'], 0, strcspn($_SERVER['REQUEST_URI'],'?'));
-        $route = str_replace($exclude, "", $route);
+        $route = str_replace($exclude, "", $url);
+        $route = str_replace("\\", "/", $route);
         $route = str_replace("/", ",", $route);
-        $route = str_replace("\\", ",", $route);
-        $route = ltrim($route, ",");
         $route = explode(",", $route);
 
         $param_read_flag = false;

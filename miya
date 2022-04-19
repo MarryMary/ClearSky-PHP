@@ -83,7 +83,18 @@ if(isset($argv[1])){
         }else if(strtolower($command[0]) == "exrollback"){
             if(array_key_exists(1, $command)){
                 Migrator::Migration(true, $command[1]);
-                "Rollback was ended.";
+                echo "Rollback was ended.";
+            }
+        }else if(strtolower($command[0]) == "systemdb"){
+            if(array_key_exists(1, $command)){
+                if($command[1] == "migration"){
+                    Migrator::SystemMigration();
+                    echo "System database create complated.";
+                }elseif($command[1] == "rollback"){
+                    echo "System database rollback complated.";
+                }else{
+                    echo "Command not found...";
+                }
             }
         }else{
             if(file_exists(dirname(__FILE__)."/Core/SystemTemplate/CLITemplate/CommandHelp")){

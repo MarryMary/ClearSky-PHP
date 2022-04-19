@@ -27,7 +27,11 @@ class Session{
             self::$cookie_sub = $sid;
 
             if($session_dumper == "RDB"){
-                QueryBuilder::Table("CSess")->Insert([$sid], $session_data);
+                $system_array = [
+                    "SessionId" => $sid,
+                    "Variable" => $session_data
+                ];
+                QueryBuilder::Table("CSess")->Insert($system_array, False);
             }else if($session_dumper == "Redis"){
                 RedisConnector::RedisSetter($sid, $session_data);
             }else if($session_dumper == "File"){
