@@ -136,9 +136,13 @@ class OrthiaBlockFunction
                     }
                 }
             }else{
-                foreach($$exploded_terms[0] as $$exploded_terms[1]){
+                $term0 = ltrim(trim($exploded_terms[0]), "$");
+                $term1 = ltrim(trim($exploded_terms[1]), "$");
+                foreach($$term0 as $$term1){
+                    $params = $this->params;
+                    $params[$term1] = $$term1;
                     $AnalyzerInstance = new Analyzer();
-                    $result .= $AnalyzerInstance->Main($dumper, $this->params, False, $this->parsemode);
+                    $result .= $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode);
                 }
             }
             return $result;

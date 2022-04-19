@@ -66,10 +66,10 @@ class OrthiaBlockCodeEngine
                             preg_match($pattern, $val, $match);
                             if(isset($match[1])) {
                                 if(strpos($match[1],'$') !== false){
-                                    if(strpos($match[1],'\\') !== false || !isset($$match[1])){
-                                        $result = $BuiltInBlockFunction->$method_name($match[1]);
+                                    if(strpos($match[1],'\\') !== false || !isset($match[1])){
+                                        $result = $BuiltInBlockFunction->$method_name($match);
                                     }else{
-                                        $result = $BuiltInBlockFunction->$method_name($$match[1]);
+                                        $result = $BuiltInBlockFunction->$method_name($match[1]);
                                     }
                                 }else{
                                     $result = $BuiltInBlockFunction->$method_name($match[1]);
