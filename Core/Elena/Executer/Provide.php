@@ -61,6 +61,6 @@ class Provide
         $exclude = str_replace("\\", "/", $exclude);
         $exclude = ltrim(rtrim($exclude, "/"), "/");
 
-        header("Location: /".$exclude."/Exposure".$to);
+        header("Location: /".$exclude."/".$to);
     }
 }
