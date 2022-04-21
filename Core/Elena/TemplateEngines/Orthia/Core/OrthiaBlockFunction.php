@@ -13,7 +13,6 @@ class OrthiaBlockFunction
     public $elif_pathed = True;
     public $copy_parts = array();
     public $block_name = "";
-    public $frame = "";
     public $params;
 
     public function __construct($params, $parsemode)

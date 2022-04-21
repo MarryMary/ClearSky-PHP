@@ -12,6 +12,18 @@ use Clsk\Elena\Tools\FileReader;
 use Clsk\Elena\Exception\ExceptionThrower\ClearSkyQueryBuilderException;
 
 class QueryBuilder{
+    /*
+     * $debugプロパティ　→　デバッグモードか否か
+     * $tableプロパティ　→　テーブル名を格納
+     * $colプロパティ　→　カラム名を格納
+     * $TermsQuery　→　WhereやAnd等の条件文をクエリとして格納
+     * $terms　→　後からbindParamで格納する際の値を格納
+     * $WhereCalled　→　Whereが呼ばれたかどうか
+     * $JoinQuery　→　Join文を格納
+     * $pdo　→　PDOインスタンスを格納
+     * $query　→　SQLのクエリ文を格納（WhereやJOINを繋げ完成したものが最終的に格納される）
+     * $stmt　→　SQLステートメントを格納
+     */
     private static $debug;
     private static $table;
     private static $col;
@@ -22,8 +34,10 @@ class QueryBuilder{
     private static $pdo;
     private static $query;
     private static $stmt;
+
     public function __construct()
     {
+        // プロパティを初期値で初期化
         self::$query = "";
         self::$TermsQuery = "";
         self::$JoinQuery = "";
@@ -31,17 +45,26 @@ class QueryBuilder{
         self::$WhereCalled = false;
         self::$debug = false;
         self::$stmt = NULL;
+        // カラムは指定がない場合にはすべて選択するようにセット
         self::$col = ["*"];
+
+        // フレームワークの設定ファイル(Web/Settings/Settings.json)を返却するメソッド
         $settings = FileReader::SettingGetter();
 
+        // 設定ファイルを基にPDOインスタンスを生成
         self::$pdo = new \PDO($settings['DBEngine'].':dbname='.$settings['DBName'].';host='.$settings['DBHost'].';charset='.$settings['DBChr'].";port=".$settings['DBPort'], $settings['DBUser'], $settings['DBPass']);
     }
 
+    // テーブル指定メソッド
     public static function Table(String $table, Bool $debug = False)
     {
+        // テーブルが空ではないかどうか（空の場合は例外返却）
         if(trim($table) != "") {
+            // テーブル名をプロパティへ格納
             self::$table = $table;
+            // デバッグモード指定
             self::$debug = $debug;
+            // 設定ファイルでデバッグモードが指定されている場合はそちらを優先してデバッグモードで動作
             if(FileReader::SettingGetter()["ApplicationTestMode"]){
                 self::$debug = True;
             }
@@ -53,20 +76,30 @@ class QueryBuilder{
         }
     }
 
+    // カラム指定メソッド
     public function Column(Array $col)
     {
+        // カラム名を配列で受け取り、foreachでループして空の文字列がないかどうかチェック(タイプヒンティングによりArray以外は受け取れない)
         foreach($col as $cols){
+            // カラム名に一つでも空の文字列があれば例外返却
             if(trim($cols) == ""){
                 throw new ClearSkyQueryBuilderException('$col引数の配列に空白を混ぜて渡すことは許可されていません。');
                 exit(1);
             }
         }
+        // カラム名の配列をプロパティに返却
         self::$col = $col;
         return $this;
     }
 
+    // Where文生成メソッド
     public function Where(String $Col, String $Is, String $Term, Bool $IsNot = False)
     {
+        /*
+         * $Col　→　カラム名
+         * $Is　→　条件指定（=等）
+         * $Term　→　条件指定に合致したい内容
+         */
         if(trim($Col) != "" and trim($Is) != "" and trim($Term) != "") {
             $keyword = " WHERE";
             if ($IsNot) {
