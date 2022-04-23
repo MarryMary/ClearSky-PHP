@@ -10,11 +10,13 @@ class OrthiaBuildInFunctions
 {
     public $params;
     public $parsemode;
-
-    public function __construct(Array $params, String $mode = "phper")
+    public $isHTMLSC;
+    
+    public function __construct(Array $params, String $mode = "phper", Bool $isHTMLSC = True)
     {
         $this->params = $params;
         $this->parsemode = $mode;
+        $this->isHTMLSC = $isHTMLSC;
     }
 
     public function SettingReader(String $key)
@@ -52,7 +54,7 @@ class OrthiaBuildInFunctions
         return $AnalyzerInstance->Main($template, compact("version", "engine_name", "dtype", "codename", "mode", "params"), False, "phper");
     }
 
-    public function ArrayAnalyzer(Array $array, String $keywords)
+    public function ArrayAnalyzer(Array $array, String $keywords, Bool $isHTMLSC = True)
     {
         $parsemode = $this->parsemode;
         if(strtolower($parsemode) == "phper"){
@@ -84,7 +86,11 @@ class OrthiaBuildInFunctions
                 ob_end_clean();
                 return $line;
             }else{
-                return htmlspecialchars($based_array);
+                if($isHTMLSC) {
+                    return htmlspecialchars($based_array);
+                }else{
+                    return $based_array;
+                }
             }
         }
     }
@@ -104,7 +110,7 @@ class OrthiaBuildInFunctions
         if(file_exists($path)){
             $template = file_get_contents($path);
             $AnalyzerInstance = new Analyzer();
-            $template = $AnalyzerInstance->Main($template, $this->params, False, "phper");
+            $template = $AnalyzerInstance->Main($template, $this->params, False, "phper", $this->isHTMLSC);
             return $template;
         }else{
             return "";
@@ -133,7 +139,7 @@ class OrthiaBuildInFunctions
             }
         }
         $AnalyzerInstance = new Analyzer();
-        $template = $AnalyzerInstance->Main($template, $this->params, False, "phper");
+        $template = $AnalyzerInstance->Main($template, $this->params, False, "phper", $this->isHTMLSC);
         return $template;
     }
 }

@@ -23,7 +23,17 @@ class Provide
             $engine = new OrthiaGate();
             return $engine->CallAnalyzer(file_get_contents($cinderella_docroot.$filename.".php"), $params, "phper");
         }else{
-            echo self::Irregular("NotFound");
+            $setting = FileReader::SettingGetter();
+            if(array_key_exists("IsDebug", $setting) && $setting["IsDebug"]) {
+                $message = "指定するURLに対するルーティング設定は見つかりましたが、表示するように指定されたファイルが読み取れませんでした。<br>正しいファイルを指定したか、指定のファイルの権限をフレームワークが読み取れるように設定しているかどうかを確認してください。";
+                $array = [
+                    "err" => $message,
+                    "IsDebug" => $setting["IsDebug"]
+                ];
+                echo self::Irregular("NotFound", $array);
+            }else{
+                echo self::Irregular("NotFound");
+            }
         }
     }
     
@@ -38,11 +48,12 @@ class Provide
         echo json_encode($json);
     }
     
-    public static function Irregular(String $filename){
+    public static function Irregular(String $filename, Array $params = array()){
         $Irregular_docroot = dirname(__FILE__)."/../../../Web/Templates/IrregularCase/";
         $filename = ltrim(ltrim($filename, "/"), "\\");
         if(file_exists($Irregular_docroot.$filename.".php")){
-            return file_get_contents($Irregular_docroot.$filename.".php");
+            $engine = new OrthiaGate();
+            return $engine->CallAnalyzer(file_get_contents($Irregular_docroot.$filename.".php"), $params, "phper");
         }
     }
 

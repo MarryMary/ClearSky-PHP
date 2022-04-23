@@ -15,10 +15,11 @@ class OrthiaBlockFunction
     public $block_name = "";
     public $params;
 
-    public function __construct($params, $parsemode)
+    public function __construct($params, $parsemode, $isHTMLSC = True)
     {
         $this->params = $params;
         $this->parsemode = $parsemode;
+        $this->isHTMLSC = $isHTMLSC;
     }
 
     public function if($terms)
@@ -89,6 +90,16 @@ class OrthiaBlockFunction
         return True;
     }
 
+    public function OrthiaRewriteEngineOff()
+    {
+        return True;
+    }
+
+    public function HTMLSpecialCharsOff()
+    {
+        return True;
+    }
+
 
     public function endforeach(String $dumper)
     {
@@ -110,7 +121,7 @@ class OrthiaBlockFunction
                     ];
                     $params = array_merge($param, $add_array);
                     $AnalyzerInstance = new Analyzer();
-                    $returned =  $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode);
+                    $returned =  $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode, $this->isHTMLSC);
                     if(strpos($returned,'ORTHIASIGNAL@') !== false){
                         $rslt = explode("##", $returned);
                         if(count($rslt) >= 2) {
@@ -141,7 +152,7 @@ class OrthiaBlockFunction
                     $params = $this->params;
                     $params[$term1] = $$term1;
                     $AnalyzerInstance = new Analyzer();
-                    $result .= $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode);
+                    $result .= $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode, $this->isHTMLSC);
                 }
             }
             return $result;
@@ -182,7 +193,7 @@ class OrthiaBlockFunction
                             $add_params = compact($initializer_variable);
                             $params = array_merge($param, $add_params);
                             $AnalyzerInstance = new Analyzer();
-                            $returned = $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode);
+                            $returned = $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode, $this->isHTMLSC);
                             if(strpos($returned,'ORTHIASIGNAL@') !== false){
                                 $rslt = explode("##", $returned);
                                 if(count($rslt) >= 2) {
@@ -235,11 +246,24 @@ class OrthiaBlockFunction
         return "";
     }
 
+    public function endOrthiaRewriteEngineOff(String $dumped)
+    {
+        return $dumped;
+    }
+
+    public function endHTMLSpecialCharsOff(String $dumped)
+    {
+        $params = $this->params;
+        $AnalyzerInstance = new Analyzer();
+        $returned = $AnalyzerInstance->Main($dumped, $params, False, $this->parsemode, False);
+        return $returned;
+    }
+
     public function endparts_block(String $dumper)
     {
         $params = $this->params;
         $AnalyzerInstance = new Analyzer();
-        $returned = $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode);
+        $returned = $AnalyzerInstance->Main($dumper, $params, False, $this->parsemode, $this->isHTMLSC);
         $this->copy_parts["[ORTHIABLOCKOBJECT]".trim(trim(trim($this->block_name), "'"), '"')] = $returned;
         return "";
     }

@@ -1,8 +1,6 @@
 <?php
 namespace Clsk\Elena\TemplateEngines\Orthia\Core;
 
-include dirname(__FILE__)."/../vendor/autoload.php";
-
 use Clsk\Elena\TemplateEngines\Orthia\Core\ClearSkyOrthiaException;
 use Clsk\Elena\TemplateEngines\Orthia\Core\OrthiaBuildInFunctions;
 use UserFunction\UserFunction;
@@ -12,26 +10,29 @@ class Analyzer
     private $param;
     private $template;
     private $parsemode;
-    public function Main(String $template, Array $param = array(), Bool $mode = False, String $writer = "phper")
+    public function Main(String $template, Array $param = array(), Bool $mode = False, String $writer = "phper", Bool $isHTMLSC = False)
     {
         if(trim($writer) != ""){
             if(count($param) != 0 && !$mode){
                 $this->template = $template;
+                $this->isHTMLSC = $isHTMLSC;
                 $this->param = $param;
                 $this->parsemode = $writer;
                 $analyzer = new OrthiaBlockCodeEngine();
-                $this->template = $analyzer->Entrance($this->template, $this->param, $this->parsemode);
+                $this->template = $analyzer->Entrance($this->template, $this->param, $this->parsemode, $this->isHTMLSC);
                 $this->VariableInserter();
                 return $this->template;
             }else if(count($param) == 0){
                 $this->template = $template;
                 $this->param = array();
+                $this->isHTMLSC = $isHTMLSC;
                 $this->parsemode = $writer;
                 $analyzer = new OrthiaBlockCodeEngine();
-                $this->template = $analyzer->Entrance($this->template, $this->param, $this->parsemode);
+                $this->template = $analyzer->Entrance($this->template, $this->param, $this->parsemode, $this->isHTMLSC);
                 return $this->template;
             }else{
                 $this->template = $template;
+                $this->isHTMLSC = $isHTMLSC;
                 $this->param = $param;
                 $this->parsemode = $writer;
                 $this->VariableInserter();
@@ -74,7 +75,11 @@ class Analyzer
                                 $line = "<pre><code>".ob_get_contents()."</code></pre>";
                                 ob_end_clean();
                             }else{
-                                $line = str_replace($v, htmlspecialchars(${$val_trimed[0]}), $line);
+                                if($this->isHTMLSC) {
+                                    $line = str_replace($v, htmlspecialchars(${$val_trimed[0]}), $line);
+                                }else{
+                                    $line = str_replace($v, ${$val_trimed[0]}, $line);
+                                }
                             }
                         }
                     }else{

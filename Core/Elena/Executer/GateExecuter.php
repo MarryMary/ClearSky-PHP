@@ -19,8 +19,8 @@ function WebAPI(Array $json){
     Provide::WebAPI($json);
 }
 
-function Irregular(String $filename){
-    return Provide::Irregular($filename);
+function Irregular(String $filename, Array $params = array()){
+    return Provide::Irregular($filename, $params);
 }
 
 function JumpTo(String $to){

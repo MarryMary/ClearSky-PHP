@@ -13,11 +13,13 @@ class OrthiaBlockCodeEngine
     private $template;
     private $params;
     private $parsemode = "phper";
-    public function Entrance(String $template, Array $params, String $mode = "phper")
+    private $isHTMLSC;
+    public function Entrance(String $template, Array $params, String $mode = "phper", Bool $isHTMLSC = True)
     {
         $this->template = $template;
         $this->params = $params;
         $this->parse_mode = $mode;
+        $this->isHTMLSC = $isHTMLSC;
         $this->MainAnalyzer();
         return $this->template;
     }
@@ -35,7 +37,7 @@ class OrthiaBlockCodeEngine
         $dumper = "";
         $block_start_name = "";
         extract($this->params);
-        $BuiltInBlockFunction = new OrthiaBlockFunction($this->params, $this->parsemode);
+        $BuiltInBlockFunction = new OrthiaBlockFunction($this->params, $this->parsemode, $this->isHTMLSC);
         $CanSkipUsingFunction = new SkipFunctionCheck();
         foreach($template as $key => $line){
             $is_code = False;
@@ -136,7 +138,7 @@ class OrthiaBlockCodeEngine
                             }
                         } else if($this->JudgeBlockOrLine($method_name) && !$dropping && !$dumping && !$skip_nextblock && !$dump_nextblock) {
                             $is_code = True;
-                            $BuiltInFunction = new OrthiaBuildInFunctions($this->params, $this->parsemode);
+                            $BuiltInFunction = new OrthiaBuildInFunctions($this->params, $this->parsemode, $this->isHTMLSC);
                             $pattern = "{\((.*)\)}";
                             preg_match($pattern, $val, $match);
                             if(isset($match[1]) && !$dropping && !$dumping) {
