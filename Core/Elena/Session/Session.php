@@ -64,7 +64,7 @@ class Session{
         $settings = FileReader::SettingGetter();
         $session_dumper = $settings["SessionDumper"];
         if($session_dumper == "RDB"){
-            $Session = QueryBuilder::Table("Csess")->Fetch("All");
+            $Session = QueryBuilder::Table("Csess")->Fetch(True)[0];
         }else if($session_dumper == "Redis"){
             $Session = RedisConnector::RedisAllReader();
         }else if($session_dumper == "File"){
@@ -219,7 +219,7 @@ class Session{
                 }else{
                     $session_id = self::$cookie_sub;
                 }
-                $data = QueryBuilder::Table("Csess")->Where("cndrl_sID", "=", $session_id)->Fetch();
+                $data = QueryBuilder::Table("Csess")->Where("cndrl_sID", "=", $session_id)->Fetch()[0];
                 $data = mb_convert_encoding($data, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
                 return json_encode($data, true)[$String];
             }else if($session_dumper == "Redis"){
@@ -257,7 +257,7 @@ class Session{
         $session_dumper = $settings["SessionDumper"];
         if(self::Breath()){
             if($session_dumper == "RDB"){
-                $data = QueryBuilder::Table("Csess")->Where("cndrl_sID", "=", $Key)->Fetch();
+                $data = QueryBuilder::Table("Csess")->Where("cndrl_sID", "=", $Key)->Fetch()[0];
                 $data = mb_convert_encoding($data, 'UTF8', 'ASCII,JIS,UTF-8,EUC-JP,SJIS-WIN');
                 return json_encode($data, true);
             }else if($session_dumper == "Redis"){
