@@ -44,11 +44,23 @@ class Session{
     public static function Unset($title = "")
     {
         if($title == ""){
+            $settings = FileReader::SettingGetter();
+            $session_dumper = $settings["SessionDumper"];
             $sid = $_COOKIE["cndrl_sID"];
-            $data = file_get_contents(dirname(__FILE__)."/SessionDumper/".$sid);
-            $datas = json_decode($data, true);
-            $datas = array();
-            file_put_contents(dirname(__FILE__)."/SessionDumper/".$sid, json_encode($datas));
+            if($session_dumper == "RDB"){
+                $system_array = [
+                    "SessionId" => $sid,
+                    "Variable" => array()
+                ];
+                QueryBuilder::Table("CSess")->Insert($system_array, False);
+            }else if($session_dumper == "Redis"){
+                RedisConnector::RedisSetter($sid, array());
+            }else if($session_dumper == "File") {
+                $data = file_get_contents(dirname(__FILE__) . "/SessionDumper/" . $sid);
+                $datas = json_decode($data, true);
+                $datas = array();
+                file_put_contents(dirname(__FILE__) . "/SessionDumper/" . $sid, json_encode($datas));
+            }
         }else{
             $sid = $_COOKIE["cndrl_sID"];
             $data = file_get_contents(dirname(__FILE__)."/SessionDumper/".$sid);
@@ -312,4 +324,11 @@ class Session{
         }
     }
 
+    public static function SIDChange(){
+        //TODO
+    }
+
+    public static function SIDSpecify(){
+        //TODO
+    }
 }
