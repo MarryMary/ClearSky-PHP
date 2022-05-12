@@ -28,6 +28,7 @@ if(file_exists($cinderella_root)){
             ];
             echo Irregular("NotFound", $array);
         }else{
+            include $cinderella_root;
             echo Irregular("NotFound");
         }
     }catch(\Throwable $e){
